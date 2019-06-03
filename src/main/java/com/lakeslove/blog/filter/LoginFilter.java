@@ -20,7 +20,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
-@Component
 public class LoginFilter extends HttpServlet implements Filter {
 
 	private static final long serialVersionUID = 679474428206195348L;

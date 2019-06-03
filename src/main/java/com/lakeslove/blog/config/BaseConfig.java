@@ -1,7 +1,9 @@
 package com.lakeslove.blog.config;
 
+import com.lakeslove.blog.filter.LoginFilter;
 import java.io.File;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.server.AbstractServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -49,5 +51,16 @@ public class BaseConfig {
         tomcatServletWebServerFactory.setDocumentRoot(
             new File("/Users/lakeslove/workspace/workspace2/blogtest/springboot/blog/src/main/resources"));
         return  tomcatServletWebServerFactory;
+    }
+
+    @Bean
+    public FilterRegistrationBean loginFilter() {
+        FilterRegistrationBean<LoginFilter> registration = new FilterRegistrationBean<>();
+        registration.setName("loginFilter");
+        registration.setFilter(new LoginFilter());
+        registration.addUrlPatterns("/manager/*");
+        registration.addInitParameter("indexPath", "/login.htm");
+        registration.setOrder(1);
+        return registration;
     }
 }

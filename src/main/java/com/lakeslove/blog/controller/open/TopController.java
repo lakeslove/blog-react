@@ -10,7 +10,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class TopController {
 	private static final Logger log = LoggerFactory.getLogger(TopController.class);
-	
+
+
+	@RequestMapping("/")
+	public String welcomeFile() {
+		return "forward:/index.htm";
+	}
+
 	@RequestMapping(value = { "index.htm" })
 	public String index() {
 		log.debug("index.htm");

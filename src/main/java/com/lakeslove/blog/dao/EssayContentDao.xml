@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lakeslove.blog.dao.EssayContentDao">
+	<select id="getEssayContentByEssayId" parameterType="long" resultType="essayContent">
+		select * from essay_content where essay_id = #{essayId} limit 1;
+	</select>
+	
+	<insert id="saveEssayContent" useGeneratedKeys="true" keyProperty="id" parameterType="essayContent">
+		insert into essay_content (essay_id,content) values (#{essayId},#{content})
+	</insert>
+	
+	<update id="updateEssayContent" parameterType="essayContent">
+		update essay_content
+		<set>
+			<if test="content != null">content = #{content}</if>
+		</set>
+		<where>
+		essay_id = #{essayId}
+		</where>
+	</update>
+	
+	<delete id="deleteEssayContentByEssayId" parameterType="long">
+		delete from essay_content where  essay_id = #{essayId}
+	</delete>
+</mapper>

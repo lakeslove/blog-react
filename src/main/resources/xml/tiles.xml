@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+	<definition name="tiles.template.public" template="/templates/tiles/layout.jsp">
+		<put-attribute name="message" value="/templates/tiles/message.jsp" />
+		<put-attribute name="header" value="/templates/tiles/header.jsp" />
+		<put-attribute name="footer" value="/templates/tiles/footer.jsp" />
+	</definition>
+	
+	<definition name="tiles.view.body.index" extends="tiles.template.public">
+		<put-attribute name="title" value="view.top.title" />
+		<put-attribute name="css" value="" />
+		<put-attribute name="js" value="" />
+		<put-attribute name="body" value="/templates/view/index.jsp" />
+	</definition>
+	
+	<definition name="tiles.view.body.register" extends="tiles.template.public">
+		<put-attribute name="title" value="view.top.title" />
+		<put-attribute name="css" value="" />
+		<put-attribute name="js" value="" />
+		<put-attribute name="body" value="/templates/view/register.jsp" />
+	</definition>
+	
+	<definition name="tiles.view.body.login" extends="tiles.template.public">
+		<put-attribute name="title" value="view.top.title" />
+		<put-attribute name="css" value="" />
+		<put-attribute name="js" value="" />
+		<put-attribute name="body" value="/templates/view/login.jsp" />
+	</definition>
+	
+	<definition name="tiles.view.body.mypage" extends="tiles.template.public">
+		<put-attribute name="title" value="view.top.title" />
+		<put-attribute name="css" value="" />
+		<put-attribute name="js" value="" />
+		<put-attribute name="body" value="/templates/view/mypage.jsp" />
+	</definition>
+	
+	<definition name="tiles.view.body.setting" extends="tiles.template.public">
+		<put-attribute name="title" value="view.top.title" />
+		<put-attribute name="css" value="" />
+		<put-attribute name="js" value="" />
+		<put-attribute name="body" value="/templates/view/setting.jsp" />
+	</definition>
+	
+	<definition name="tiles.view.body.set.detail" extends="tiles.template.public">
+		<put-attribute name="title" value="view.top.title" />
+		<put-attribute name="css" value="" />
+		<put-attribute name="js" value="" />
+		<put-attribute name="body" value="/templates/view/setDetail.jsp" />
+	</definition>
+	
+	<definition name="tiles.view.body.testError" extends="tiles.template.public">
+		<put-attribute name="title" value="view.top.title" />
+		<put-attribute name="css" value="" />
+		<put-attribute name="js" value="" />
+		<put-attribute name="body" value="/templates/view/testError.jsp" />
+	</definition>
+	
+	<definition name="tiles.view.body.blog" extends="tiles.template.public">
+		<put-attribute name="title" value="view.top.title" />
+		<put-attribute name="css" value="" />
+		<put-attribute name="js" value="" />
+		<put-attribute name="body" value="/templates/view/blog.jsp" />
+	</definition>
+	
+	<definition name="tiles.view.body.show" extends="tiles.template.public">
+		<put-attribute name="title" value="view.top.title" />
+		<put-attribute name="css" value="" />
+		<put-attribute name="js" value="" />
+		<put-attribute name="body" value="/templates/view/show.jsp" />
+	</definition>
+	
+	<definition name="tiles.view.body.prose" extends="tiles.template.public">
+		<put-attribute name="title" value="view.top.title" />
+		<put-attribute name="css" value="" />
+		<put-attribute name="js" value="" />
+		<put-attribute name="body" value="/templates/view/prose.jsp" />
+	</definition>
+	
+	<definition name="tiles.view.body.poem" extends="tiles.template.public">
+		<put-attribute name="title" value="view.top.title" />
+		<put-attribute name="css" value="" />
+		<put-attribute name="js" value="" />
+		<put-attribute name="body" value="/templates/view/poem.jsp" />
+	</definition>
+	
+	<definition name="tiles.view.body.novel" extends="tiles.template.public">
+		<put-attribute name="title" value="view.top.title" />
+		<put-attribute name="css" value="" />
+		<put-attribute name="js" value="" />
+		<put-attribute name="body" value="/templates/view/novel.jsp" />
+	</definition>
+	
+	<definition name="tiles.view.body.notes" extends="tiles.template.public">
+		<put-attribute name="title" value="view.top.title" />
+		<put-attribute name="css" value="" />
+		<put-attribute name="js" value="" />
+		<put-attribute name="body" value="/templates/view/notes.jsp" />
+	</definition>
+	
+	
+</tiles-definitions>

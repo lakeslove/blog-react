@@ -9,6 +9,7 @@ import org.springframework.boot.web.servlet.server.AbstractServletWebServerFacto
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -68,11 +69,25 @@ public class BaseConfig {
   }
 
   @Bean
-  TilesConfigurer tilesConfigurer() {
+  public TilesConfigurer tilesConfigurer() {
     TilesConfigurer tilesConfigurer = new TilesConfigurer();
     tilesConfigurer.setDefinitions("classpath:templates/tiles/tiles.xml");
     tilesConfigurer.setCheckRefresh(true);
     return tilesConfigurer;
+  }
+
+  @Bean
+  public ResourceBundleMessageSource messageSource(){
+    ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+    messageSource.setBasenames(
+        "message.message_error",
+        "message.message_generic",
+        "message.message_validate"
+    );
+    messageSource.setUseCodeAsDefaultMessage(false);
+    messageSource.setCacheSeconds(600);
+    messageSource.setDefaultEncoding("UTF-8");
+    return messageSource;
   }
 
 }

@@ -8,10 +8,10 @@ public class PropertyUtil {
 	
 	private static final Log log = LogFactory.getLog(PropertyUtil.class);
 	private static Properties allProperties;
-	private static String[] propertyNames = new String[]{"system.properties",
-														"message_error.properties",
-														"message_generic.properties",
-														"message_validate.properties"};
+	private static String[] propertyNames = new String[]{"application.properties",
+														"message/message_error.properties",
+														"message/message_generic.properties",
+														"message/message_validate.properties"};
 	
 	public static String getPropertyValue(String key) {
 		if(allProperties==null){

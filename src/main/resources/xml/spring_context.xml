@@ -21,25 +21,25 @@
         http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
 
-	<context:property-placeholder location="classpath:system.properties" />
-	
+	<!--<context:property-placeholder location="classpath:system.properties" />-->
+
     <!-- 配置dbcp2数据源 -->
-	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
-		destroy-method="close">
-		<property name="url" value="${db.url}"></property>
-		<property name="driverClassName" value="${db.driver}"></property>
-		<property name="username" value="${db.username}"></property>
-		<property name="password" value="${db.password}"></property>
-		<property name="maxTotal" value="30" />
-		<property name="maxIdle" value="20" />
-		<property name="minIdle" value="5" />
-		<property name="initialSize" value="5" />
-		<property name="maxWaitMillis" value="-1" />
-		<property name="timeBetweenEvictionRunsMillis" value="120000" />
-		<property name="minEvictableIdleTimeMillis" value="300000" />
-		<property name="poolPreparedStatements" value="true" />
-		<property name="removeAbandonedOnBorrow" value="true" />
-	</bean>
+	<!--<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"-->
+		<!--destroy-method="close">-->
+		<!--<property name="url" value="${db.url}"></property>-->
+		<!--<property name="driverClassName" value="${db.driver}"></property>-->
+		<!--<property name="username" value="${db.username}"></property>-->
+		<!--<property name="password" value="${db.password}"></property>-->
+		<!--<property name="maxTotal" value="30" />-->
+		<!--<property name="maxIdle" value="20" />-->
+		<!--<property name="minIdle" value="5" />-->
+		<!--<property name="initialSize" value="5" />-->
+		<!--<property name="maxWaitMillis" value="-1" />-->
+		<!--<property name="timeBetweenEvictionRunsMillis" value="120000" />-->
+		<!--<property name="minEvictableIdleTimeMillis" value="300000" />-->
+		<!--<property name="poolPreparedStatements" value="true" />-->
+		<!--<property name="removeAbandonedOnBorrow" value="true" />-->
+	<!--</bean>-->
 	
 	<!-- 使用MyBatis-spring的sqlSessionFactory来代替MyBatis本身的sqlSessionFactory -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -87,7 +87,7 @@
 		</property>
 	</bean>
 	<!-- 异常处理 end -->
-	
+
 	<!-- 缓存支持 start -->
 	<cache:annotation-driven cache-manager="cacheManager"/>
 	<bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
@@ -100,12 +100,12 @@
 		</property>
 	</bean>
 	<!-- 缓存支持 end -->
-	
+
 	<!-- velocityEngine start-->
 	<!--<bean id="velocityEngine"-->
-		<!--class="org.apache.velocity.VelocityEngineFactoryBean">-->
+		<!--class="org.apache.freemarker.VelocityEngineFactoryBean">-->
 		<!--<property name="resourceLoaderPath">-->
-			<!--<value>classpath:velocity</value>-->
+			<!--<value>classpath:freemarker</value>-->
 		<!--</property>-->
 		<!--<property name="velocityProperties">-->
 			<!--<props>-->
@@ -120,28 +120,28 @@
 
 	<!-- sendEmail start -->
 	<!-- 解除默认的单例模式，设置scope="prototype" -->
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl" scope="prototype">
-		<property name="host" value="${mail.host}" />
-		<property name="username" value="${mail.username}" />
-		<property name="password" value="${mail.password}" />
-		<property name="javaMailProperties">
-			<props>
-				<prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
-				<prop key="mail.smtp.timeout">${mail.smtp.timeout}</prop>
-				<prop key="mail.smtp.port">${mail.smtp.port}</prop>
-			</props>
-		</property>
-	</bean>
+	<!--<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl" scope="prototype">-->
+		<!--<property name="host" value="${mail.host}" />-->
+		<!--<property name="username" value="${mail.username}" />-->
+		<!--<property name="password" value="${mail.password}" />-->
+		<!--<property name="javaMailProperties">-->
+			<!--<props>-->
+				<!--<prop key="mail.smtp.auth">${mail.smtp.auth}</prop>-->
+				<!--<prop key="mail.smtp.timeout">${mail.smtp.timeout}</prop>-->
+				<!--<prop key="mail.smtp.port">${mail.smtp.port}</prop>-->
+			<!--</props>-->
+		<!--</property>-->
+	<!--</bean>-->
 	<!-- sendEmail end -->
-	
+
 	<!-- IOC demo start -->
-	
+
 	<!-- 在过滤器中注入service start-->
 	<!-- 	<bean id="userService" class="com.lx.blog.service.impl.UserServiceImpl"></bean> -->
 	<!-- 在过滤器中注入service end-->
-	
+
 	<!-- IOC demo end-->
-	
+
 	<!-- AOP demo start  -->
 	<!-- 切面类 -->
 	<!--<bean id="appendLogsByAOP" class="com.lakeslove.blog.util.AppendLogsByAOP"/>-->
@@ -156,5 +156,5 @@
 		</aop:aspect>
 	</aop:config> -->
 	<!-- AOP demo end  -->
-	
+
 </beans>

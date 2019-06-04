@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
-import org.apache.commons.lang.StringUtils;
+import org.springframework.util.StringUtils;
 
 public class JSONUtil {
 	 /** 
@@ -59,7 +59,7 @@ public class JSONUtil {
 	 * @return
 	 */
 	public static String escapeJSONString(String JSONString) {
-		if (StringUtils.isNotEmpty(JSONString)) {
+		if (!StringUtils.isEmpty(JSONString)) {
 			StringBuilder builder = new StringBuilder();
 			for (char c : JSONString.toCharArray()) {
 				switch (c) {

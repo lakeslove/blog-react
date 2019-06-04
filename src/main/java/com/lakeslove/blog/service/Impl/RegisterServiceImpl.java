@@ -9,72 +9,81 @@ import com.lakeslove.blog.util.Email;
 import com.lakeslove.blog.util.PropertyUtil;
 import com.lakeslove.blog.util.RandomCodeUtil;
 import com.lakeslove.blog.util.SpringEmailUtil;
-import com.lakeslove.blog.util.VelocitiesUtil;
+import freemarker.template.Template;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 
 @Service
-public class RegisterServiceImpl extends AbstractServiceImpl<Register, Long>implements RegisterService {
+public class RegisterServiceImpl extends AbstractServiceImpl<Register, Long> implements RegisterService {
 
-	private static final Logger log = LogManager.getLogger(RegisterServiceImpl.class);
+  private static final Logger log = LogManager.getLogger(RegisterServiceImpl.class);
 
-	@Autowired
-	private RegisterDao registerDao;
-	
-	@Autowired
-	private UserDao userDao;
+  @Autowired
+  private RegisterDao registerDao;
 
-	@Override
-	public Boolean existEmail(String email) {
-		int emailCount = registerDao.existEmail(email);
-		return emailCount>0?true:false;
-	}
+  @Autowired
+  private UserDao userDao;
 
-	@Override
-	@Transactional(readOnly=false, rollbackFor=Exception.class)
-	public void sendEmail(String emailAddress) {
-		String verificationCode = RandomCodeUtil.createNumberAndLetterCode(4);
-		Register register = new Register();
-		register.setEmail(emailAddress);
-		register.setVerificationCode(verificationCode);
-		registerDao.insertRegister(register);
-//		SpringEmailUtil.sendEmail(email);
-		Email email = new Email();	
-		email.setFromEmailAddress(PropertyUtil.getPropertyValue("mail.fromAddress"));
-		email.setFromPersonName(PropertyUtil.getPropertyValue("mail.fromAddress"));
-		email.setToEmailAddresses(new String[]{emailAddress});
-		email.setSubject("微博客验证码");
-		Map<String,Object> velocityContext = new HashMap<>();
-		velocityContext.put("code", verificationCode);
-		velocityContext.put("webAddress",PropertyUtil.getPropertyValue("web.address"));
-		String content = VelocitiesUtil.getVelocityText("email_register.vm", velocityContext);
-		email.setContent(content);
-		try {
-			SpringEmailUtil.sendEmail(email);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+  @Autowired
+  FreeMarkerConfigurer freeMarkerConfigurer;
 
-	@Override
-	public Boolean validateEmailAndVerificationCode(User user,String code) {
-		Register register = new Register();
-		register.setEmail(user.getEmail());
-		register.setVerificationCode(code);
-		HashMap<String,Integer> resultMap = registerDao.validateEmailAndVerificationCode(register);
-		if(resultMap.size()>0){
-			registerDao.deleteRegister((long)resultMap.get("id"));
-			userDao.insertUser(user);
-			return true;
-		}
-		return false;
-	}
-	
-	
+  @Value("${spring.mail.username}")
+  private String fromMail;//发送人
+
+  @Override
+  public Boolean existEmail(String email) {
+    int emailCount = registerDao.existEmail(email);
+    return emailCount > 0 ? true : false;
+  }
+
+  @Override
+  @Transactional(readOnly = false, rollbackFor = Exception.class)
+  public void sendEmail(String emailAddress) {
+    String verificationCode = RandomCodeUtil.createNumberAndLetterCode(4);
+    Register register = new Register();
+    register.setEmail(emailAddress);
+    register.setVerificationCode(verificationCode);
+    registerDao.insertRegister(register);
+    Email email = new Email();
+    email.setFromEmailAddress(fromMail);
+    email.setFromPersonName(fromMail);
+    email.setToEmailAddresses(new String[] {emailAddress});
+    email.setSubject("微博客验证码");
+    Map<String, Object> freeMarkerContext = new HashMap<>();
+    freeMarkerContext.put("code", verificationCode);
+    freeMarkerContext.put("webAddress", PropertyUtil.getPropertyValue("web.address"));
+    try {
+      Template tpl = freeMarkerConfigurer.getConfiguration().getTemplate("email_register.ftl");
+      String content = FreeMarkerTemplateUtils.processTemplateIntoString(tpl, freeMarkerContext);
+      email.setContent(content);
+      SpringEmailUtil.sendEmail(email);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  @Override
+  public Boolean validateEmailAndVerificationCode(User user, String code) {
+    Register register = new Register();
+    register.setEmail(user.getEmail());
+    register.setVerificationCode(code);
+    HashMap<String, Integer> resultMap = registerDao.validateEmailAndVerificationCode(register);
+    if (resultMap.size() > 0) {
+      registerDao.deleteRegister((long) resultMap.get("id"));
+      userDao.insertUser(user);
+      return true;
+    }
+    return false;
+  }
+
+
 }

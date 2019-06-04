@@ -3,6 +3,7 @@ package com.lakeslove.blog.config;
 import com.lakeslove.blog.filter.LoginFilter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.server.AbstractServletWebServerFactory;
@@ -18,11 +19,7 @@ import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
 @Configuration
-@ImportResource(
-    {
-        "classpath:xml/spring_context.xml"
-    }
-)
+@MapperScan("com.lakeslove.blog.dao")
 public class BaseConfig {
 
   /**

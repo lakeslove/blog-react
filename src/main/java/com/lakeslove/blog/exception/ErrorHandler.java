@@ -6,16 +6,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.web.servlet.HandlerExceptionResolver;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
-public class ExceptionHandler implements HandlerExceptionResolver {
+@ControllerAdvice
+public class ErrorHandler {
 	
-	private static final Logger log = LogManager.getLogger(ExceptionHandler.class);
-	
-	@Override
-	public ModelAndView resolveException(HttpServletRequest request,
-                                         HttpServletResponse response, Object handler, Exception ex) {
+	private static final Logger log = LogManager.getLogger(ErrorHandler.class);
+
+	@ExceptionHandler(Exception.class)
+	public ModelAndView resolveException(
+			Exception ex,
+			HttpServletRequest request,
+			HttpServletResponse response) {
 		ex.printStackTrace();
 		log.error(ex.getMessage());
 		Map<String, Object> model = new HashMap<String, Object>();

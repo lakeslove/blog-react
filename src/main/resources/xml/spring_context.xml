@@ -77,15 +77,15 @@
 	<!-- 信息 结束-->
 	
 	<!-- 异常处理 start -->
-	<bean class="com.lakeslove.blog.exception.ExceptionHandler" />
-	<bean id="exceptionResolver"
-		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-		<property name="exceptionMappings">
-			<props>
-				<prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">testError</prop>
-			</props>
-		</property>
-	</bean>
+	<!--<bean class="com.lakeslove.blog.exception.ErrorHandler" />-->
+	<!--<bean id="exceptionResolver"-->
+		<!--class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">-->
+		<!--<property name="exceptionMappings">-->
+			<!--<props>-->
+				<!--<prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">testError</prop>-->
+			<!--</props>-->
+		<!--</property>-->
+	<!--</bean>-->
 	<!-- 异常处理 end -->
 
 	<!-- 缓存支持 start -->

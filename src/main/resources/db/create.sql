@@ -1,0 +1,68 @@
+#mysql数据库
+DROP DATABASE IF EXISTS blog;
+create database blog DEFAULT CHARACTER SET utf8 ;
+use blog;
+
+DROP TABLE IF EXISTS user;
+CREATE TABLE user(
+id BIGINT PRIMARY KEY AUTO_INCREMENT,
+name VARCHAR(20) NOT NULL,
+password VARCHAR(20) NOT NULL,
+`email` varchar(50) UNIQUE NOT NULL,
+slogan VARCHAR(200),
+create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+update_date TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS user_type;
+CREATE TABLE user_type(
+id INT PRIMARY KEY AUTO_INCREMENT,
+user_type VARCHAR(20) NOT NULL
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS user_message;
+CREATE TABLE `user_message` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) DEFAULT NULL,
+  `user_type_id` int(11) DEFAULT NULL,
+  `interest` varchar(20) DEFAULT NULL,
+  `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_date` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `user_type_id` (`user_type_id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `user_message_ibfk_1` FOREIGN KEY (`user_type_id`) REFERENCES `user_type` (`id`),
+  CONSTRAINT `user_message_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS essay;
+CREATE TABLE essay(
+id BIGINT PRIMARY KEY AUTO_INCREMENT,
+user_id BIGINT,
+title VARCHAR(20) NOT NULL,
+flag INT DEFAULT 0,
+create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+update_date TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+FOREIGN KEY(user_id) REFERENCES user(id) ON DELETE CASCADE
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS essay_content;
+CREATE TABLE essay_content(
+id BIGINT PRIMARY KEY AUTO_INCREMENT,
+essay_id BIGINT,
+chapter int(11),
+chapter_name varchar(256),
+content text,
+create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+update_date TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+FOREIGN KEY(essay_id) REFERENCES essay(id) ON DELETE CASCADE
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS register;
+CREATE TABLE `register` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(206) UNIQUE NOT NULL,
+  `verification_code` varchar(4) NOT NULL,
+  `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
